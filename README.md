@@ -21,7 +21,7 @@ require("scrollBeforeEOF").setup()
 ### Lazy
 
 ``` lua
-{ "emdrs/scrollBeforeEOF" }
+{ "emdrs/scrollBeforeEOF", opts = {} }
 ```
 
 ## How to use
