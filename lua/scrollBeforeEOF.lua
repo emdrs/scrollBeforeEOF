@@ -2,6 +2,7 @@ local M = {}
 
 local function get_line_end_win_pos(line_number)
     local last_col = vim.fn.col({line_number, '$'})
+    if last_col > 1 then last_col = last_col - 1 end
     return vim.fn.screenpos(0, line_number, last_col)
 end
 
