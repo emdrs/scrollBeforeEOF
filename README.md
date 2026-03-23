@@ -4,27 +4,27 @@
 
 ## How this work
 
-The plugin gets the amount of lines of buffer, the height of window, the current row of cursor, considering actual blank spaces, calculates the blank spaces needed, and then, runs `<C-e>` to get a blank line at bottom. Simple as that. If scrollof is higher than half of window height, the plugin will use half of window.
+The plugin gets positions of: last file line, window, cursor line, gets window height and scrolloff, calculates the actual blank spaces and blank spaces needed, and then, runs `n<C-e>` to get a blank lines at bottom. Simple as that. If scrollof is higher than half of window height, the plugin will get half of windows minus 1 and will set on `vim.wo.scrolloff` to prevent fight with neovim. The plugin runs on `CursorMoved` event but stop if last file line if not in window or if do not have blank lines to add.
 
 ## How to install
 
 ### Neovim pack
 
-`` lua
+``` lua
 vim.pack.add {{ src="https://github.com/emdrs/scrollBeforeEOF" }}
 require("scrollBeforeEOF").setup()
-``
+```
 
 ### Lazy
 
-`` lua
+``` lua
 { "emdrs/scrollBeforeEOF" }
-``
+```
 
 ## How to use
 
-This plugin uses `scrolloff` as amount of blank spaces.
+This plugin uses `scrolloff` as amount of blank spaces. Set him on your config.
 
-`` lua
+``` lua
 vim.o.scrolloff = 20
-``
+```
