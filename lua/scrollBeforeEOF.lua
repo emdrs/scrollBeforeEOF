@@ -21,12 +21,11 @@ local scroll_eof = function()
 
     vim.wo.scrolloff = offset
 
-    local cursor_win_line = vim.fn.winline()
+    local current_line = vim.fn.screenpos(0, vim.fn.line("."), 1).row
 
     local blank_lines = win_info.height - line_end_pos
-    local lines_to_scroll = offset - (win_info.height - cursor_win_line)
+    local lines_to_scroll = offset - (win_info.height - current_line)
 
-    local current_line = vim.fn.line('.')
     if vim.wo.wrap and current_line < last_line then
         local line_content = vim.fn.getline(win_info.topline)
         local display_width = vim.fn.strdisplaywidth(line_content)
