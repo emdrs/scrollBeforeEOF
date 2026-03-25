@@ -39,7 +39,7 @@ end
 M.setup = function ()
     local scroll_group = vim.api.nvim_create_augroup("ScrollEOF", { clear = true }) -- Prevents multiple adds
 
-    vim.api.nvim_create_autocmd({ "CursorMoved", "VimResized" }, {
+    vim.api.nvim_create_autocmd({ "CursorMoved", "WinResized" }, {
         group = scroll_group,
         callback = scroll_eof,
     })
