@@ -35,8 +35,21 @@ local function scroll_eof()
     vim.fn.winrestview({ topline = top_line })
 end
 
+local default_opts = {
+    virtual_lines = true
+}
 
-M.setup = function ()
+M.setup = function (opts)
+    if opts == nil then
+        opts = default_opts
+    else
+        for default_key, default_value in pairs(default_opts) do
+            if opts[default_key] == nil then
+                opts[default_key] = default_value
+            end
+        end
+    end
+
     local scroll_group = vim.api.nvim_create_augroup("ScrollBeforeEOF", { clear = true }) -- Prevents multiple adds
 
     vim.api.nvim_create_autocmd({ "CursorMoved", "WinResized" }, {
@@ -46,6 +59,8 @@ M.setup = function ()
 
     local ns = vim.api.nvim_create_namespace("ScrollBeforeEOF")
     -- Change this to open buffer and resize window to not stack too much
+
+    if not opts.virtual_lines then return end
 
     vim.api.nvim_create_autocmd({ "BufEnter", "WinResized" }, {
         group = scroll_group,
