@@ -24,13 +24,6 @@ require("scrollBeforeEOF").setup()
 { "emdrs/scrollBeforeEOF", opts = {} }
 ```
 
-## Default opts
-```lua
-require("scrollBeforeEOF").setup {
-  virtual_lines = true, -- Add virtual blank lines at bottom (without ~ char)
-}
-```
-
 ## How to use
 
 This plugin uses `scrolloff` as amount of blank spaces. Set him on your config.
