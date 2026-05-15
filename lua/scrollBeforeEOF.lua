@@ -1,6 +1,10 @@
 local M = {}
 
 local function scroll_eof()
+    if vim.wo.scrolloff == 0 then
+        return
+    end
+
     local buf_id = vim.api.nvim_get_current_buf() -- Buffer id
     local win_id = vim.api.nvim_get_current_win() -- Window id
     local win_info = vim.fn.getwininfo(win_id)[1] -- Some info of window
@@ -35,12 +39,21 @@ local function scroll_eof()
     vim.fn.winrestview({ topline = top_line })
 end
 
-M.setup = function ()
-    local scroll_group = vim.api.nvim_create_augroup("ScrollBeforeEOF", { clear = true }) -- Prevents multiple adds
+M.setup = function (opts)
+    opts = opts or {}
+    local on_terminal = opts.on_terminal
+    if on_terminal == nil then on_terminal = false end
+
+    local scroll_group = vim.api.nvim_create_augroup("ScrollBeforeEOF", { clear = true })
 
     vim.api.nvim_create_autocmd({ "CursorMoved", "WinResized" }, {
         group = scroll_group,
-        callback = scroll_eof,
+        callback = function()
+            if not on_terminal and vim.b.term_type == "terminal" then
+                return
+            end
+            scroll_eof()
+        end,
     })
 end
 
