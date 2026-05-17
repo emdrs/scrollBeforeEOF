@@ -49,7 +49,7 @@ M.setup = function (opts)
     vim.api.nvim_create_autocmd({ "CursorMoved", "WinResized" }, {
         group = scroll_group,
         callback = function()
-            if not on_terminal and vim.b.term_type == "terminal" then
+            if not on_terminal and vim.bo.buftype == "terminal" then
                 return
             end
             scroll_eof()
